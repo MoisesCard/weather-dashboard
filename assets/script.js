@@ -1,27 +1,58 @@
-const formEl = document.querySelector(".search-form")
-const citySearchEl = document.querySelector("#city");
-const currentDayContainer = document.querySelector(".current-day-content")
+var formEl = document.querySelector(".search-form")
+var citySearchEl = document.querySelector("#city");
+var currentDayContainer = document.querySelector(".current-day-content")
 var fiveDayWrapper = document.querySelector(".five-day-wrapper");
+var historyWrapper = document.querySelector(".history")
+var deleteBtn = document.querySelector(".delete-btn")
 
-const formSubmitHandler = function (event) {
+
+
+var formSubmitHandler = function (event) {
     event.preventDefault();
-    const cityName = citySearchEl.value.trim();
+    var cityName = citySearchEl.value.trim();
+    cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
+
     if (cityName) {
         getCurrentCityWeather(cityName);
         getFiveDayForcast(cityName);
         citySearchEl.value = "";
+        createHistoryButton();
     } else {
         alert("Please input a city!");
+        formSubmitHandler();
+    }
+}
+
+var saveCities = function (city) {
+    var currentCity = JSON.parse(localStorage.getItem('cityItems')) || [];
+    let set =new Set(currentCity);
+    set.add(city);
+    var newArr = Array.from(set);
+    localStorage.setItem('cityItems', JSON.stringify(newArr));
+};
+
+var deleteHistory = function() {
+    localStorage.clear();
+    location.reload();
+}
+
+var historyClickHandler = function (event) {
+    var historyEl = event.target.getAttribute("data-city");
+    if (historyEl) {
+        getCurrentCityWeather(historyEl);
+        getFiveDayForcast(historyEl)
     }
 };
 
-const getCurrentCityWeather = function(city) {
-    const weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city + "&appid=0938c05e8d987103f9ba5cb07b6b876e&units=imperial";
+var getCurrentCityWeather = function(city) {
+    
+    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city + "&appid=0938c05e8d987103f9ba5cb07b6b876e&units=imperial";
     fetch(weatherApiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
                 displayCurrentCityWeather(data);
                 getCurrentUvIndex(data);
+                saveCities(city);
             })
         } else {
             alert("Please insert a valid city!");
@@ -29,13 +60,27 @@ const getCurrentCityWeather = function(city) {
     });
 };
 
+var createHistoryButton = function() {
+    var cityName = JSON.parse(localStorage.getItem('cityItems')) || [];
+
+    historyWrapper.innerHTML = "";
+    for (var i = 0; i < cityName.length; i++) {
+        var historyBtn = document.createElement("button");
+        historyBtn.className = "historybtn"
+        historyBtn.textContent = cityName[i];
+        historyBtn.setAttribute("data-city",  cityName[i]);
+        historyWrapper.appendChild(historyBtn);
+    }
+}
+createHistoryButton();
+
+
 var getFiveDayForcast = function (city) {
     var fiveDayUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=0938c05e8d987103f9ba5cb07b6b876e&units=imperial";
     fetch(fiveDayUrl).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
                 displayFiveDayForcast(data);
-                console.log(data)
             });
         } else {
             alert("Could not find 5-day forcast");
@@ -43,13 +88,12 @@ var getFiveDayForcast = function (city) {
     });
 };
 
-const getCurrentUvIndex = function(data) {
-    const uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0938c05e8d987103f9ba5cb07b6b876e";
+var getCurrentUvIndex = function(data) {
+    var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0938c05e8d987103f9ba5cb07b6b876e";
     fetch(uvApiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
                 displayCurrentUvIndex(data);
-                console.log(data)
             });
         } else {
             alert('There was a problem fetching UV Index!');
@@ -57,14 +101,14 @@ const getCurrentUvIndex = function(data) {
     });
 };
 
-const displayCurrentCityWeather = function (data) {
-    const currentCityEl = document.querySelector("#current-city");
-    const weatherImg = document.querySelector(".weather-img");
-    const tempEl = document.querySelector("#temp");
-    const humidityEl = document.querySelector("#humidity");
-    const windEl = document.querySelector("#wind");
+var displayCurrentCityWeather = function (data) {
+    var currentCityEl = document.querySelector("#current-city");
+    var weatherImg = document.querySelector(".weather-img");
+    var tempEl = document.querySelector("#temp");
+    var humidityEl = document.querySelector("#humidity");
+    var windEl = document.querySelector("#wind");
 
-    const currentCity = data.name;
+    var currentCity = data.name;
 
     currentCityEl.textContent = currentCity + "    " + dayjs().format('MM/DD/YYYY');
     weatherImg.setAttribute("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
@@ -83,25 +127,29 @@ var displayFiveDayForcast = function (data) {
 
         var fiveDayDate = dayjs(data.list[i].dt_txt).format('MM/DD/YYYY');
         var fiveDayDates = document.createElement("h3");
+        fiveDayDates.className = "five-day-date";
         fiveDayDates.textContent = fiveDayDate;
         fiveDayCard.appendChild(fiveDayDates);
 
         var fiveDayImg = document.createElement("img")
         fiveDayImg.setAttribute("src", "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png");
+        fiveDayImg.setAttribute("class", "five-day-img");
         fiveDayCard.appendChild(fiveDayImg);
 
         var fiveDayTemp = document.createElement("p");
         fiveDayTemp.textContent = "Temp: " + Math.floor(data.list[i].main.temp) + " F";
+        fiveDayTemp.className = "five-day-temp";
         fiveDayCard.appendChild(fiveDayTemp);
 
-        var fiveDayHumidity =  document.createElement("p");
+        var fiveDayHumidity = document.createElement("p");
         fiveDayHumidity.textContent = "Humidity: " + data.list[i].main.humidity + "%";
-        fiveDayCard.appendChild(fiveDayHumidity)
+        fiveDayHumidity.className = "five-day-humidity";
+        fiveDayCard.appendChild(fiveDayHumidity);
     }
 }
 
-const displayCurrentUvIndex = function(data) {
-    const uvEl = document.querySelector("#uv");
+var displayCurrentUvIndex = function(data) {
+    var uvEl = document.querySelector("#uv");
 
     uvEl.textContent = data.value;
     if (parseInt(uvEl.textContent) <= 2) {
@@ -119,3 +167,5 @@ const displayCurrentUvIndex = function(data) {
 }
 
 formEl.addEventListener("submit", formSubmitHandler);
+historyWrapper.addEventListener("click", historyClickHandler);
+deleteBtn.addEventListener("click", deleteHistory);

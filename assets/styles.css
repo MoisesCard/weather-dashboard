@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+}
+
+header {
+    background-color: rgb(9, 135, 135);
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+main {
+    display: flex;
+}
+.search-form h3 {
+    font-size: 25px;
+}
+input[type=text] {
+    padding: 8px 15px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid rgb(117, 117, 117);
+    -webkit-transition: 0.9s;
+    transition: 0.9s;
+    outline: none;
+    border-radius: 5px;
+    font-size: large;
+}
+
+input[type=text]:focus {
+    border: 3px solid #555;
+}
+.search-form button {
+    padding: 11px;
+    background-color: dodgerblue;
+    outline: none;
+    border-radius: 11px;
+    color: floralwhite;
+    font-weight: 600;
+    font-size: 15px;
+}
+.history {
+    background-color: floralwhite;
+    height: 60vh;
+}
+.left-content {
+    flex: 25%;
+    background-color: rgb(194, 194, 194);
+    padding: 15px;
+    height: 70vh;
+}
+.right-content {
+    flex: 75%;
+    margin-left: 15px;
+    margin-right: 10px;
+    padding: 15px;
+}
+
+.current-day-content {
+    height: 40vh;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    padding: 15px;
+}
+.current-day-content h3 {
+    font-size: 35px;
+    margin-bottom: 30px;
+}
+.current-day-content p {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.five-day-content {
+    height: 24vh;
+    border: 1px solid black;
+    padding: 15px;
+} 

@@ -4,9 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/styles.css">
     <title>Document</title>
 </head>
 <body>
-    
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main>
+        <div class="left-content">
+            <form class="search-form">
+                <h3>Search for a City:</h3>
+                <input type="text" id="city" />
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+            <div class="history">
+
+            </div>
+        </div>
+        <div class="right-content">
+            <div class="current-day-content">
+                <h3 id="current-city">Place Holder</h3>
+                <p id="temp">Temperature: <span></span> F</p>
+                <p id="humidity">Humidity: <span></span>%</p>
+                <p id="wind">Wind Speed: <span></span> MPH</p>
+                <p id="uv">UV Index: <span></span></p>
+            </div>
+            <div class="five-day-content">
+                <h2>5-Day Forecast:</h2>
+            </div>
+        </div>
+    </main>
+
+    <script src="./assets/script.js"></script>
 </body>
 </html>

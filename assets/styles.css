@@ -71,6 +71,30 @@ input[type=text]:focus {
     margin-top: 10px;
 }
 
+.city-title-heading {
+    display: flex;
+}
+.weather-img {
+    position: relative;
+    bottom: 30px;
+}
+
+.safe-index {
+    background-color: greenyellow;
+}
+.moderate-index {
+    background-color: yellow;
+}
+.high-index {
+    background-color: orange;
+}
+.very-high-index {
+    background-color: red;
+}
+.extreme-index {
+    background-color: purple;
+}
+
 .five-day-content {
     height: 24vh;
     border: 1px solid black;

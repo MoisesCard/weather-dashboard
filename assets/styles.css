@@ -100,3 +100,14 @@ input[type=text]:focus {
     border: 1px solid black;
     padding: 15px;
 } 
+
+five-day-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.five-day-card {
+    background-color: rgb(95, 191, 223);
+    height: 200px;
+    width: 185px;
+    border-radius: 5px;
+}

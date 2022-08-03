@@ -12,7 +12,7 @@
     <header>
         <h1>Weather Dashboard</h1>
     </header>
-    
+
     <main>
         <div class="left-content">
             <form class="search-form">
@@ -26,7 +26,9 @@
         </div>
         <div class="right-content">
             <div class="current-day-content">
-                <h3 id="current-city"></h3>
+                <div class="city-title-heading">
+                    <h3 id="current-city"></h3><img class="weather-img" />
+                </div>
                 <p>Temperature: <span id="temp"></span> F</p>
                 <p>Humidity: <span id="humidity"></span>%</p>
                 <p>Wind Speed: <span id="wind"></span> MPH</p>
@@ -34,8 +36,12 @@
             </div>
             <div class="five-day-content">
                 <h2>5-Day Forecast:</h2>
+                <div class="five-day-wrapper">
+
+                </div>
             </div>
         </div>
+        
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.9.6/dayjs.min.js"></script>

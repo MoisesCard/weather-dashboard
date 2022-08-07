@@ -122,25 +122,30 @@ input[type=text]:focus {
 }
 
 .uv-styles {
-    color: black;
+    color: rgb(0, 0, 0);
     border-radius: 5px;
     padding: 5px;
 }
 
 .safe-index {
     background-color: greenyellow;
+    color: rgb(0, 0, 0);
 }
 .moderate-index {
     background-color: yellow;
+    color: rgb(0, 0, 0);
 }
 .high-index {
     background-color: orange;
+    color: rgb(0, 0, 0);
 }
 .very-high-index {
     background-color: red;
+    color: rgb(0, 0, 0);
 }
 .extreme-index {
     background-color: purple;
+    color: rgb(0, 0, 0);
 }
 
 .five-day-content {

@@ -76,7 +76,7 @@ createHistoryButton();
 
 
 var getFiveDayForcast = function (city) {
-    var fiveDayUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=0938c05e8d987103f9ba5cb07b6b876e&units=imperial";
+    var fiveDayUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=0938c05e8d987103f9ba5cb07b6b876e&units=imperial";
     fetch(fiveDayUrl).then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
@@ -89,7 +89,7 @@ var getFiveDayForcast = function (city) {
 };
 
 var getCurrentUvIndex = function(data) {
-    var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0938c05e8d987103f9ba5cb07b6b876e";
+    var uvApiUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + data.coord.lat + "&lon=" + data.coord.lon + "&appid=0938c05e8d987103f9ba5cb07b6b876e";
     fetch(uvApiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
@@ -111,7 +111,7 @@ var displayCurrentCityWeather = function (data) {
     var currentCity = data.name;
 
     currentCityEl.textContent = currentCity + "    " + dayjs().format('MM/DD/YYYY');
-    weatherImg.setAttribute("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
+    weatherImg.setAttribute("src", "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
     tempEl.textContent = Math.floor(data.main.temp);
     humidityEl.textContent = data.main.humidity;
     windEl.textContent = data.wind.speed;
@@ -132,7 +132,7 @@ var displayFiveDayForcast = function (data) {
         fiveDayCard.appendChild(fiveDayDates);
 
         var fiveDayImg = document.createElement("img")
-        fiveDayImg.setAttribute("src", "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png");
+        fiveDayImg.setAttribute("src", "https://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png");
         fiveDayImg.setAttribute("class", "five-day-img");
         fiveDayCard.appendChild(fiveDayImg);
 

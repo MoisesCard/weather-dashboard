@@ -1,6 +1,7 @@
 # Weather Dashboard
   
-  
+  <img width="1440" alt="Screen Shot 2022-08-07 at 12 30 34 PM" src="https://user-images.githubusercontent.com/103094173/183301614-d1236ca6-52a8-472f-ba00-af456191a628.png">
+
   ## Description
   This application lets user input city and they will get a 5 day weather forecast of that city.
 
